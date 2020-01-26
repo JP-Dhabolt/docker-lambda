@@ -7,7 +7,7 @@ RUN npm install -g serverless
 WORKDIR /code
 COPY .pre-commit-config.yaml /code/
 RUN git init
-RUN pipenv install pre-commit
+RUN pipenv install pre-commit --skip-lock
 RUN pipenv run pre-commit run
 RUN rm -rf ./.git
 RUN rm -rf ./*
