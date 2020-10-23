@@ -1,13 +1,13 @@
 FROM lambci/lambda:build-python3.8
 
 RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash -
-RUN yum install -y nodejs
-RUN npm install -g serverless
+RUN yum install -y nodejs && \
+    npm install -g serverless && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /code
-COPY .pre-commit-config.yaml /code/
-RUN git init
-RUN pipenv install pre-commit --skip-lock
-RUN pipenv run pre-commit run
-RUN rm -rf ./.git
-RUN rm -rf ./*
+WORKDIR /workspace
+COPY .pre-commit-config.yaml /workspace/
+RUN git init && \
+    pipenv install pre-commit --skip-lock && \
+    pipenv run pre-commit run && \
+    rm -rf ./*
